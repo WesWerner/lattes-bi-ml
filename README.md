@@ -83,7 +83,3 @@ de teste.
 - `docs/REGRAS_ETL.md`: regras de implementação do ETL
 - `docs/RELATORIO_FASE2.md`: validação do mapeamento XML → staging
 - `docs/GUIA_BI_POWERBI.md`: conexão, modelo, medidas DAX e páginas do painel
-
-## Licença
-
-A definir (sugestão: MIT para o código).
