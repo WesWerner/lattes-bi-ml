@@ -26,7 +26,7 @@ XML Lattes ──► stg (staging) ──► dw (estrela) ──► ml (texto e 
 | `sql/` | DDL e cargas: `stg`, `dw`, tópicos e views de BI (esquema `bi`) |
 | `scripts/` | inventário dos XMLs, auditorias, validações e recorte dos gráficos |
 | `tests/` | testes automatizados (os de integração exigem banco e são pulados sem ele) |
-| `powerbi/` | painel `TCC_LATTES.pbix`, tema, fundos e descrição da interface |
+| `powerbi/` | painel `TCC_LATTES.pbip`, tema, fundos e descrição da interface |
 | `figuras_bi/` | gráficos do painel, um por arquivo |
 | `docs/` | decisões de projeto, regras do ETL e guia do painel |
 
@@ -64,7 +64,7 @@ export PGDATABASE=dw_lattes_dev PGUSER=seu_usuario PGPASSWORD=sua_senha
    `sql/21_dw_topicos.sql`. Resumo: `python scripts/fase8_resumo.py`.
 5. **BI:** `python scripts/rodar_sql.py sql/30_bi_views.sql NOME_DO_BANCO` cria o esquema `bi`;
    edite a senha em `sql/32_bi_login.sql` e rode-o para criar o login de leitura.
-   Abra `powerbi/TCC_LATTES.pbix` e aponte para o banco (veja `docs/GUIA_BI_POWERBI.md`).
+   Abra `powerbi/TCC_LATTES.pbip` e aponte para o banco (veja `docs/GUIA_BI_POWERBI.md`).
    Para gerar uma imagem por gráfico: `python scripts/recortar_graficos.py EXPORTACAO.pdf figuras_bi --por-pagina`.
 
 ## Testes
