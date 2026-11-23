@@ -1,0 +1,956 @@
+version: 1
+project: TCC ETL Plataforma Lattes
+source:
+  root_element: CURRICULO-VITAE
+  relative_path_convention: Every source.path and field XPath is relative to /CURRICULO-VITAE/ (no leading root
+    prefix).
+  expected_files: 57624
+  id_lattes_xpath: '@NUMERO-IDENTIFICADOR'
+  researcher_name_xpath: DADOS-GERAIS/@NOME-COMPLETO
+  inventories:
+    tags: atributos de elementos conferidos contra tags_xml.csv
+    attributes: atributos conferidos contra atributos_xml.csv
+  sample_validation:
+    required_real_xml_samples: 2
+    recommended_real_xml_samples: 3
+    status: PENDING_INPUT_FILES
+    note: No real XML samples were present in the available project files when this mapping was created.
+global_rules:
+  order_xml: 1-based counter per mapped repeated source element within one XML; never reuse SEQUENCIA-* attributes.
+  authors: Concatenate individual AUTORES entries sorted by ORDEM-DE-AUTORIA numeric ascending, stable by source
+    order for ties; separator is "; ".
+  missing_id: id_lattes remains NULL; chave_pesquisador = "ARQUIVO:" + caminho_relativo when the source ID is absent.
+  source_status: Keep PENDENTE until parsing and all mapped inserts complete; set PROCESSADO only on success, ERRO
+    on parse/processing error.
+  no_truncation: Reject/log values exceeding SQL column length; never truncate silently.
+  count_semantics: expected_counts come from structural inventory for all 57,624 files; they are validation baselines,
+    not promises that every individual XML has these counts.
+mappings:
+- table: stg.curriculo_origem
+  record_grain: one_row_per_xml_file
+  source:
+    path: .
+    expected_counts:
+      occurrences_total: 57624
+      files_with_occurrence: 57624
+      total_files_analyzed: 57624
+  fields:
+    id_lattes_original:
+      xpath: '@NUMERO-IDENTIFICADOR'
+      nullable: true
+      expected_counts: &id001
+        occurrences_total: 56251
+        files_with_occurrence: 56251
+        total_files_analyzed: 57624
+    chave_pesquisador:
+      derived: id_lattes_original if present else "ARQUIVO:" + caminho_relativo
+    status_processamento:
+      derived: PROCESSADO only after all mapped sections succeed; otherwise ERRO
+    hash_sha256:
+      derived: SHA-256 of raw file bytes
+    caminho_relativo:
+      derived: path relative to configured input root
+    nome_arquivo:
+      derived: basename of input file
+- table: stg.pesquisador
+  record_grain: one_row_per_xml_file
+  source:
+    path: .
+    expected_counts:
+      occurrences_total: 57624
+      files_with_occurrence: 57624
+      total_files_analyzed: 57624
+  fields:
+    id_lattes:
+      xpath: '@NUMERO-IDENTIFICADOR'
+      nullable: true
+      expected_counts: *id001
+    chave_pesquisador:
+      derived: same value as stg.curriculo_origem.chave_pesquisador
+    nome:
+      xpath: DADOS-GERAIS/@NOME-COMPLETO
+      nullable: true
+      expected_counts:
+        occurrences_total: 57624
+        files_with_occurrence: 57624
+        total_files_analyzed: 57624
+    atuacao_profissional:
+      derived_from_table: stg.atuacao_profissional
+      rule: institution with lowest valid sequencia_importancia; deterministic tie-break by ordem_xml
+- table: stg.atuacao_profissional
+  source:
+    path: DADOS-GERAIS/ATUACOES-PROFISSIONAIS/ATUACAO-PROFISSIONAL
+    expected_counts:
+      occurrences_total: 143834
+      files_with_occurrence: 35543
+      total_files_analyzed: 57624
+  fields:
+    id_lattes:
+      derived: root @NUMERO-IDENTIFICADOR
+    ordem_xml:
+      derived: 1-based position among ATUACAO-PROFISSIONAL elements in this curriculum
+    sequencia_importancia:
+      xpath: '@SEQUENCIA-IMPORTANCIA'
+      cast: integer_or_null
+      expected_counts:
+        occurrences_total: 143362
+        files_with_occurrence: 35278
+        total_files_analyzed: 57624
+    nome_instituicao:
+      xpath: '@NOME-INSTITUICAO'
+      nullable: true
+      expected_counts:
+        occurrences_total: 143834
+        files_with_occurrence: 35543
+        total_files_analyzed: 57624
+    dados_xml:
+      derived: JSON object of all attributes of the ATUACAO-PROFISSIONAL node
+- table: stg.linha_pesquisador
+  source:
+    path: DADOS-GERAIS/ATUACOES-PROFISSIONAIS/ATUACAO-PROFISSIONAL/ATIVIDADES-DE-PESQUISA-E-DESENVOLVIMENTO/PESQUISA-E-DESENVOLVIMENTO/LINHA-DE-PESQUISA
+    expected_counts:
+      occurrences_total: 12023
+      files_with_occurrence: 4019
+      total_files_analyzed: 57624
+  fields:
+    id_lattes:
+      derived: root @NUMERO-IDENTIFICADOR
+    ordem_xml:
+      derived: 1-based position among matching LINHA-DE-PESQUISA elements in this curriculum
+    linha_pesquisa:
+      xpath: '@TITULO-DA-LINHA-DE-PESQUISA'
+      nullable: true
+      expected_counts:
+        occurrences_total: 12023
+        files_with_occurrence: 4019
+        total_files_analyzed: 57624
+    titulo_ingles:
+      xpath: '@TITULO-DA-LINHA-DE-PESQUISA-INGLES'
+      nullable: true
+      expected_counts:
+        occurrences_total: 11993
+        files_with_occurrence: 3995
+        total_files_analyzed: 57624
+    objetivos:
+      xpath: '@OBJETIVOS-LINHA-DE-PESQUISA'
+      nullable: true
+      expected_counts:
+        occurrences_total: 12020
+        files_with_occurrence: 4018
+        total_files_analyzed: 57624
+    objetivos_ingles:
+      xpath: '@OBJETIVOS-LINHA-DE-PESQUISA-INGLES'
+      nullable: true
+      expected_counts:
+        occurrences_total: 11993
+        files_with_occurrence: 3995
+        total_files_analyzed: 57624
+    indicador_linha_pesquisa_ativa:
+      xpath: '@FLAG-LINHA-DE-PESQUISA-ATIVA'
+      transform: SIM->true; NAO->false; unexpected->null + warning
+      expected_counts:
+        occurrences_total: 12023
+        files_with_occurrence: 4019
+        total_files_analyzed: 57624
+- table: stg.areas_atuacao
+  source:
+    path: DADOS-GERAIS/AREAS-DE-ATUACAO/AREA-DE-ATUACAO
+    expected_counts:
+      occurrences_total: 73165
+      files_with_occurrence: 37561
+      total_files_analyzed: 57624
+  fields:
+    id_lattes:
+      derived: root @NUMERO-IDENTIFICADOR
+    ordem_xml:
+      derived: 1-based position among matching AREA-DE-ATUACAO elements
+    nome_grande_area:
+      xpath: '@NOME-GRANDE-AREA-DO-CONHECIMENTO'
+      expected_counts:
+        occurrences_total: 73165
+        files_with_occurrence: 37561
+        total_files_analyzed: 57624
+    nome_area:
+      xpath: '@NOME-DA-AREA-DO-CONHECIMENTO'
+      expected_counts:
+        occurrences_total: 73165
+        files_with_occurrence: 37561
+        total_files_analyzed: 57624
+    nome_sub_area:
+      xpath: '@NOME-DA-SUB-AREA-DO-CONHECIMENTO'
+      expected_counts:
+        occurrences_total: 73165
+        files_with_occurrence: 37561
+        total_files_analyzed: 57624
+    nome_especialidade:
+      xpath: '@NOME-DA-ESPECIALIDADE'
+      expected_counts:
+        occurrences_total: 73162
+        files_with_occurrence: 37561
+        total_files_analyzed: 57624
+- table: stg.projetos_pesquisa
+  source:
+    path: DADOS-GERAIS/ATUACOES-PROFISSIONAIS/ATUACAO-PROFISSIONAL/ATIVIDADES-DE-PARTICIPACAO-EM-PROJETO/PARTICIPACAO-EM-PROJETO/PROJETO-DE-PESQUISA
+    expected_counts:
+      occurrences_total: 91743
+      files_with_occurrence: 19103
+      total_files_analyzed: 57624
+  fields:
+    id_lattes:
+      derived: root @NUMERO-IDENTIFICADOR
+    ordem_xml:
+      derived: 1-based position among matching PROJETO-DE-PESQUISA elements
+    identificador_projeto:
+      xpath: '@IDENTIFICADOR-PROJETO'
+      expected_counts:
+        occurrences_total: 89587
+        files_with_occurrence: 17959
+        total_files_analyzed: 57624
+    ano_inicio:
+      xpath: '@ANO-INICIO'
+      expected_counts:
+        occurrences_total: 91743
+        files_with_occurrence: 19103
+        total_files_analyzed: 57624
+    ano_fim:
+      xpath: '@ANO-FIM'
+      expected_counts:
+        occurrences_total: 91743
+        files_with_occurrence: 19103
+        total_files_analyzed: 57624
+    nome_projeto:
+      xpath: '@NOME-DO-PROJETO'
+      expected_counts:
+        occurrences_total: 91743
+        files_with_occurrence: 19103
+        total_files_analyzed: 57624
+    descricao_projeto:
+      xpath: '@DESCRICAO-DO-PROJETO'
+      expected_counts:
+        occurrences_total: 91741
+        files_with_occurrence: 19102
+        total_files_analyzed: 57624
+    situacao:
+      xpath: '@SITUACAO'
+      expected_counts:
+        occurrences_total: 91743
+        files_with_occurrence: 19103
+        total_files_analyzed: 57624
+    natureza:
+      xpath: '@NATUREZA'
+      expected_counts:
+        occurrences_total: 91743
+        files_with_occurrence: 19103
+        total_files_analyzed: 57624
+- table: stg.artigos
+  source:
+    path: PRODUCAO-BIBLIOGRAFICA/ARTIGOS-PUBLICADOS/ARTIGO-PUBLICADO
+    expected_counts:
+      occurrences_total: 116999
+      files_with_occurrence: 12224
+      total_files_analyzed: 57624
+  fields:
+    id_lattes:
+      derived: root @NUMERO-IDENTIFICADOR
+    ordem_xml:
+      derived: 1-based position among ARTIGO-PUBLICADO elements
+    ano:
+      xpath: DADOS-BASICOS-DO-ARTIGO/@ANO-DO-ARTIGO
+      expected_counts:
+        occurrences_total: 116999
+        files_with_occurrence: 12224
+        total_files_analyzed: 57624
+    titulo:
+      xpath: DADOS-BASICOS-DO-ARTIGO/@TITULO-DO-ARTIGO
+      expected_counts:
+        occurrences_total: 116999
+        files_with_occurrence: 12224
+        total_files_analyzed: 57624
+    doi:
+      xpath: DADOS-BASICOS-DO-ARTIGO/@DOI
+      expected_counts:
+        occurrences_total: 116991
+        files_with_occurrence: 12221
+        total_files_analyzed: 57624
+    idioma:
+      xpath: DADOS-BASICOS-DO-ARTIGO/@IDIOMA
+      expected_counts:
+        occurrences_total: 116999
+        files_with_occurrence: 12224
+        total_files_analyzed: 57624
+    natureza:
+      xpath: DADOS-BASICOS-DO-ARTIGO/@NATUREZA
+      expected_counts:
+        occurrences_total: 116999
+        files_with_occurrence: 12224
+        total_files_analyzed: 57624
+    meio_divulgacao:
+      xpath: DADOS-BASICOS-DO-ARTIGO/@MEIO-DE-DIVULGACAO
+      expected_counts:
+        occurrences_total: 116999
+        files_with_occurrence: 12224
+        total_files_analyzed: 57624
+    titulo_periodico:
+      xpath: DETALHAMENTO-DO-ARTIGO/@TITULO-DO-PERIODICO-OU-REVISTA
+      expected_counts:
+        occurrences_total: 116999
+        files_with_occurrence: 12224
+        total_files_analyzed: 57624
+    volume:
+      xpath: DETALHAMENTO-DO-ARTIGO/@VOLUME
+      expected_counts:
+        occurrences_total: 116999
+        files_with_occurrence: 12224
+        total_files_analyzed: 57624
+    pagina_inicial:
+      xpath: DETALHAMENTO-DO-ARTIGO/@PAGINA-INICIAL
+      expected_counts:
+        occurrences_total: 116999
+        files_with_occurrence: 12224
+        total_files_analyzed: 57624
+    pagina_final:
+      xpath: DETALHAMENTO-DO-ARTIGO/@PAGINA-FINAL
+      expected_counts:
+        occurrences_total: 116999
+        files_with_occurrence: 12224
+        total_files_analyzed: 57624
+    issn:
+      xpath: DETALHAMENTO-DO-ARTIGO/@ISSN
+      expected_counts:
+        occurrences_total: 116999
+        files_with_occurrence: 12224
+        total_files_analyzed: 57624
+    local_publicacao:
+      xpath: DETALHAMENTO-DO-ARTIGO/@LOCAL-DE-PUBLICACAO
+      expected_counts:
+        occurrences_total: 116999
+        files_with_occurrence: 12224
+        total_files_analyzed: 57624
+    autores:
+      authors:
+        nodes_xpath: AUTORES
+        name_attribute: NOME-COMPLETO-DO-AUTOR
+        order_attribute: ORDEM-DE-AUTORIA
+        sort_order: numeric_ascending_then_source_order
+        separator: '; '
+        empty_values: omit
+        expected_name_counts:
+          occurrences_total: 609443
+          files_with_occurrence: 12222
+          total_files_analyzed: 57624
+        expected_order_counts:
+          occurrences_total: 609443
+          files_with_occurrence: 12222
+          total_files_analyzed: 57624
+- table: stg.livros
+  source:
+    path: PRODUCAO-BIBLIOGRAFICA/LIVROS-E-CAPITULOS/LIVROS-PUBLICADOS-OU-ORGANIZADOS/LIVRO-PUBLICADO-OU-ORGANIZADO
+    expected_counts:
+      occurrences_total: 11661
+      files_with_occurrence: 3663
+      total_files_analyzed: 57624
+  fields:
+    id_lattes:
+      derived: root @NUMERO-IDENTIFICADOR
+    ordem_xml:
+      derived: 1-based position among LIVRO-PUBLICADO-OU-ORGANIZADO elements
+    ano:
+      xpath: DADOS-BASICOS-DO-LIVRO/@ANO
+      expected_counts:
+        occurrences_total: 11661
+        files_with_occurrence: 3663
+        total_files_analyzed: 57624
+    titulo:
+      xpath: DADOS-BASICOS-DO-LIVRO/@TITULO-DO-LIVRO
+      expected_counts:
+        occurrences_total: 11661
+        files_with_occurrence: 3663
+        total_files_analyzed: 57624
+    numero_edicao:
+      xpath: DETALHAMENTO-DO-LIVRO/@NUMERO-DA-EDICAO-REVISAO
+      expected_counts:
+        occurrences_total: 11661
+        files_with_occurrence: 3663
+        total_files_analyzed: 57624
+    cidade_editora:
+      xpath: DETALHAMENTO-DO-LIVRO/@CIDADE-DA-EDITORA
+      expected_counts:
+        occurrences_total: 11661
+        files_with_occurrence: 3663
+        total_files_analyzed: 57624
+    nome_editora:
+      xpath: DETALHAMENTO-DO-LIVRO/@NOME-DA-EDITORA
+      expected_counts:
+        occurrences_total: 11661
+        files_with_occurrence: 3663
+        total_files_analyzed: 57624
+    numero_volumes:
+      xpath: DETALHAMENTO-DO-LIVRO/@NUMERO-DE-VOLUMES
+      expected_counts:
+        occurrences_total: 11661
+        files_with_occurrence: 3663
+        total_files_analyzed: 57624
+    numero_paginas:
+      xpath: DETALHAMENTO-DO-LIVRO/@NUMERO-DE-PAGINAS
+      expected_counts:
+        occurrences_total: 11661
+        files_with_occurrence: 3663
+        total_files_analyzed: 57624
+    isbn:
+      xpath: DETALHAMENTO-DO-LIVRO/@ISBN
+      expected_counts:
+        occurrences_total: 11661
+        files_with_occurrence: 3663
+        total_files_analyzed: 57624
+    autores:
+      authors:
+        nodes_xpath: AUTORES
+        name_attribute: NOME-COMPLETO-DO-AUTOR
+        order_attribute: ORDEM-DE-AUTORIA
+        sort_order: numeric_ascending_then_source_order
+        separator: '; '
+        empty_values: omit
+        expected_name_counts:
+          occurrences_total: 41914
+          files_with_occurrence: 3662
+          total_files_analyzed: 57624
+        expected_order_counts:
+          occurrences_total: 41914
+          files_with_occurrence: 3662
+          total_files_analyzed: 57624
+- table: stg.capitulos_livros
+  source:
+    path: PRODUCAO-BIBLIOGRAFICA/LIVROS-E-CAPITULOS/CAPITULOS-DE-LIVROS-PUBLICADOS/CAPITULO-DE-LIVRO-PUBLICADO
+    expected_counts:
+      occurrences_total: 39656
+      files_with_occurrence: 7646
+      total_files_analyzed: 57624
+  fields:
+    id_lattes:
+      derived: root @NUMERO-IDENTIFICADOR
+    ordem_xml:
+      derived: 1-based position among CAPITULO-DE-LIVRO-PUBLICADO elements
+    ano:
+      xpath: DADOS-BASICOS-DO-CAPITULO/@ANO
+      expected_counts:
+        occurrences_total: 39656
+        files_with_occurrence: 7646
+        total_files_analyzed: 57624
+    titulo_capitulo:
+      xpath: DADOS-BASICOS-DO-CAPITULO/@TITULO-DO-CAPITULO-DO-LIVRO
+      expected_counts:
+        occurrences_total: 39656
+        files_with_occurrence: 7646
+        total_files_analyzed: 57624
+    titulo_livro:
+      xpath: DETALHAMENTO-DO-CAPITULO/@TITULO-DO-LIVRO
+      expected_counts:
+        occurrences_total: 39656
+        files_with_occurrence: 7646
+        total_files_analyzed: 57624
+    doi:
+      xpath: DADOS-BASICOS-DO-CAPITULO/@DOI
+      expected_counts:
+        occurrences_total: 39649
+        files_with_occurrence: 7641
+        total_files_analyzed: 57624
+    idioma:
+      xpath: DADOS-BASICOS-DO-CAPITULO/@IDIOMA
+      expected_counts:
+        occurrences_total: 39656
+        files_with_occurrence: 7646
+        total_files_analyzed: 57624
+    meio_divulgacao:
+      xpath: DADOS-BASICOS-DO-CAPITULO/@MEIO-DE-DIVULGACAO
+      expected_counts:
+        occurrences_total: 39656
+        files_with_occurrence: 7646
+        total_files_analyzed: 57624
+    numero_edicao:
+      xpath: DETALHAMENTO-DO-CAPITULO/@NUMERO-DA-EDICAO-REVISAO
+      expected_counts:
+        occurrences_total: 39656
+        files_with_occurrence: 7646
+        total_files_analyzed: 57624
+    cidade_editora:
+      xpath: DETALHAMENTO-DO-CAPITULO/@CIDADE-DA-EDITORA
+      expected_counts:
+        occurrences_total: 39656
+        files_with_occurrence: 7646
+        total_files_analyzed: 57624
+    nome_editora:
+      xpath: DETALHAMENTO-DO-CAPITULO/@NOME-DA-EDITORA
+      expected_counts:
+        occurrences_total: 39656
+        files_with_occurrence: 7646
+        total_files_analyzed: 57624
+    isbn:
+      xpath: DETALHAMENTO-DO-CAPITULO/@ISBN
+      expected_counts:
+        occurrences_total: 39656
+        files_with_occurrence: 7646
+        total_files_analyzed: 57624
+    pagina_inicial:
+      xpath: DETALHAMENTO-DO-CAPITULO/@PAGINA-INICIAL
+      expected_counts:
+        occurrences_total: 39656
+        files_with_occurrence: 7646
+        total_files_analyzed: 57624
+    pagina_final:
+      xpath: DETALHAMENTO-DO-CAPITULO/@PAGINA-FINAL
+      expected_counts:
+        occurrences_total: 39656
+        files_with_occurrence: 7646
+        total_files_analyzed: 57624
+    numero_volumes:
+      xpath: DETALHAMENTO-DO-CAPITULO/@NUMERO-DE-VOLUMES
+      expected_counts:
+        occurrences_total: 39656
+        files_with_occurrence: 7646
+        total_files_analyzed: 57624
+    organizadores:
+      xpath: DETALHAMENTO-DO-CAPITULO/@ORGANIZADORES
+      expected_counts:
+        occurrences_total: 39656
+        files_with_occurrence: 7646
+        total_files_analyzed: 57624
+    autores:
+      authors:
+        nodes_xpath: AUTORES
+        name_attribute: NOME-COMPLETO-DO-AUTOR
+        order_attribute: ORDEM-DE-AUTORIA
+        sort_order: numeric_ascending_then_source_order
+        separator: '; '
+        empty_values: omit
+        expected_name_counts:
+          occurrences_total: 144488
+          files_with_occurrence: 7645
+          total_files_analyzed: 57624
+        expected_order_counts:
+          occurrences_total: 144488
+          files_with_occurrence: 7645
+          total_files_analyzed: 57624
+- table: stg.textos_jornais
+  source:
+    path: PRODUCAO-BIBLIOGRAFICA/TEXTOS-EM-JORNAIS-OU-REVISTAS/TEXTO-EM-JORNAL-OU-REVISTA
+    expected_counts:
+      occurrences_total: 13114
+      files_with_occurrence: 2571
+      total_files_analyzed: 57624
+  fields:
+    id_lattes:
+      derived: root @NUMERO-IDENTIFICADOR
+    ordem_xml:
+      derived: 1-based position among TEXTO-EM-JORNAL-OU-REVISTA elements
+    ano:
+      xpath: DADOS-BASICOS-DO-TEXTO/@ANO-DO-TEXTO
+      expected_counts:
+        occurrences_total: 13114
+        files_with_occurrence: 2571
+        total_files_analyzed: 57624
+    titulo:
+      xpath: DADOS-BASICOS-DO-TEXTO/@TITULO-DO-TEXTO
+      expected_counts:
+        occurrences_total: 13114
+        files_with_occurrence: 2571
+        total_files_analyzed: 57624
+    titulo_jornal:
+      xpath: DETALHAMENTO-DO-TEXTO/@TITULO-DO-JORNAL-OU-REVISTA
+      expected_counts:
+        occurrences_total: 13114
+        files_with_occurrence: 2571
+        total_files_analyzed: 57624
+    doi:
+      xpath: DADOS-BASICOS-DO-TEXTO/@DOI
+      expected_counts:
+        occurrences_total: 13103
+        files_with_occurrence: 2565
+        total_files_analyzed: 57624
+    idioma:
+      xpath: DADOS-BASICOS-DO-TEXTO/@IDIOMA
+      expected_counts:
+        occurrences_total: 13114
+        files_with_occurrence: 2571
+        total_files_analyzed: 57624
+    natureza:
+      xpath: DADOS-BASICOS-DO-TEXTO/@NATUREZA
+      expected_counts:
+        occurrences_total: 13114
+        files_with_occurrence: 2571
+        total_files_analyzed: 57624
+    meio_divulgacao:
+      xpath: DADOS-BASICOS-DO-TEXTO/@MEIO-DE-DIVULGACAO
+      expected_counts:
+        occurrences_total: 13114
+        files_with_occurrence: 2571
+        total_files_analyzed: 57624
+    data_publicacao:
+      xpath: DETALHAMENTO-DO-TEXTO/@DATA-DE-PUBLICACAO
+      expected_counts:
+        occurrences_total: 13114
+        files_with_occurrence: 2571
+        total_files_analyzed: 57624
+    local_publicacao:
+      xpath: DETALHAMENTO-DO-TEXTO/@LOCAL-DE-PUBLICACAO
+      expected_counts:
+        occurrences_total: 13114
+        files_with_occurrence: 2571
+        total_files_analyzed: 57624
+    pagina_inicial:
+      xpath: DETALHAMENTO-DO-TEXTO/@PAGINA-INICIAL
+      expected_counts:
+        occurrences_total: 13114
+        files_with_occurrence: 2571
+        total_files_analyzed: 57624
+    pagina_final:
+      xpath: DETALHAMENTO-DO-TEXTO/@PAGINA-FINAL
+      expected_counts:
+        occurrences_total: 13114
+        files_with_occurrence: 2571
+        total_files_analyzed: 57624
+    volume:
+      xpath: DETALHAMENTO-DO-TEXTO/@VOLUME
+      expected_counts:
+        occurrences_total: 13114
+        files_with_occurrence: 2571
+        total_files_analyzed: 57624
+    issn:
+      xpath: DETALHAMENTO-DO-TEXTO/@ISSN
+      expected_counts:
+        occurrences_total: 13114
+        files_with_occurrence: 2571
+        total_files_analyzed: 57624
+    autores:
+      authors:
+        nodes_xpath: AUTORES
+        name_attribute: NOME-COMPLETO-DO-AUTOR
+        order_attribute: ORDEM-DE-AUTORIA
+        sort_order: numeric_ascending_then_source_order
+        separator: '; '
+        empty_values: omit
+        expected_name_counts:
+          occurrences_total: 20362
+          files_with_occurrence: 2569
+          total_files_analyzed: 57624
+        expected_order_counts:
+          occurrences_total: 20362
+          files_with_occurrence: 2569
+          total_files_analyzed: 57624
+- table: stg.trabalhos_eventos
+  source:
+    path: PRODUCAO-BIBLIOGRAFICA/TRABALHOS-EM-EVENTOS/TRABALHO-EM-EVENTOS
+    expected_counts:
+      occurrences_total: 204446
+      files_with_occurrence: 15099
+      total_files_analyzed: 57624
+  fields:
+    id_lattes:
+      derived: root @NUMERO-IDENTIFICADOR
+    ordem_xml:
+      derived: 1-based position among TRABALHO-EM-EVENTOS elements
+    ano:
+      xpath: DADOS-BASICOS-DO-TRABALHO/@ANO-DO-TRABALHO
+      expected_counts:
+        occurrences_total: 204446
+        files_with_occurrence: 15099
+        total_files_analyzed: 57624
+    titulo:
+      xpath: DADOS-BASICOS-DO-TRABALHO/@TITULO-DO-TRABALHO
+      expected_counts:
+        occurrences_total: 204446
+        files_with_occurrence: 15099
+        total_files_analyzed: 57624
+    nome_evento:
+      xpath: DETALHAMENTO-DO-TRABALHO/@NOME-DO-EVENTO
+      expected_counts:
+        occurrences_total: 204446
+        files_with_occurrence: 15099
+        total_files_analyzed: 57624
+    titulo_anais:
+      xpath: DETALHAMENTO-DO-TRABALHO/@TITULO-DOS-ANAIS-OU-PROCEEDINGS
+      expected_counts:
+        occurrences_total: 204444
+        files_with_occurrence: 15099
+        total_files_analyzed: 57624
+    doi:
+      xpath: DADOS-BASICOS-DO-TRABALHO/@DOI
+      expected_counts:
+        occurrences_total: 204397
+        files_with_occurrence: 15076
+        total_files_analyzed: 57624
+    idioma:
+      xpath: DADOS-BASICOS-DO-TRABALHO/@IDIOMA
+      expected_counts:
+        occurrences_total: 204446
+        files_with_occurrence: 15099
+        total_files_analyzed: 57624
+    natureza:
+      xpath: DADOS-BASICOS-DO-TRABALHO/@NATUREZA
+      expected_counts:
+        occurrences_total: 204446
+        files_with_occurrence: 15099
+        total_files_analyzed: 57624
+    meio_divulgacao:
+      xpath: DADOS-BASICOS-DO-TRABALHO/@MEIO-DE-DIVULGACAO
+      expected_counts:
+        occurrences_total: 204446
+        files_with_occurrence: 15099
+        total_files_analyzed: 57624
+    pais_evento:
+      xpath: DADOS-BASICOS-DO-TRABALHO/@PAIS-DO-EVENTO
+      expected_counts:
+        occurrences_total: 204446
+        files_with_occurrence: 15099
+        total_files_analyzed: 57624
+    ano_realizacao:
+      xpath: DETALHAMENTO-DO-TRABALHO/@ANO-DE-REALIZACAO
+      expected_counts:
+        occurrences_total: 204446
+        files_with_occurrence: 15099
+        total_files_analyzed: 57624
+    cidade_evento:
+      xpath: DETALHAMENTO-DO-TRABALHO/@CIDADE-DO-EVENTO
+      expected_counts:
+        occurrences_total: 204446
+        files_with_occurrence: 15099
+        total_files_analyzed: 57624
+    classificacao_evento:
+      xpath: DETALHAMENTO-DO-TRABALHO/@CLASSIFICACAO-DO-EVENTO
+      expected_counts:
+        occurrences_total: 204446
+        files_with_occurrence: 15099
+        total_files_analyzed: 57624
+    nome_editora:
+      xpath: DETALHAMENTO-DO-TRABALHO/@NOME-DA-EDITORA
+      expected_counts:
+        occurrences_total: 204442
+        files_with_occurrence: 15098
+        total_files_analyzed: 57624
+    cidade_editora:
+      xpath: DETALHAMENTO-DO-TRABALHO/@CIDADE-DA-EDITORA
+      expected_counts:
+        occurrences_total: 204442
+        files_with_occurrence: 15098
+        total_files_analyzed: 57624
+    isbn:
+      xpath: DETALHAMENTO-DO-TRABALHO/@ISBN
+      expected_counts:
+        occurrences_total: 204441
+        files_with_occurrence: 15097
+        total_files_analyzed: 57624
+    volume:
+      xpath: DETALHAMENTO-DO-TRABALHO/@VOLUME
+      expected_counts:
+        occurrences_total: 204442
+        files_with_occurrence: 15098
+        total_files_analyzed: 57624
+    pagina_inicial:
+      xpath: DETALHAMENTO-DO-TRABALHO/@PAGINA-INICIAL
+      expected_counts:
+        occurrences_total: 204442
+        files_with_occurrence: 15098
+        total_files_analyzed: 57624
+    pagina_final:
+      xpath: DETALHAMENTO-DO-TRABALHO/@PAGINA-FINAL
+      expected_counts:
+        occurrences_total: 204442
+        files_with_occurrence: 15098
+        total_files_analyzed: 57624
+    autores:
+      authors:
+        nodes_xpath: AUTORES
+        name_attribute: NOME-COMPLETO-DO-AUTOR
+        order_attribute: ORDEM-DE-AUTORIA
+        sort_order: numeric_ascending_then_source_order
+        separator: '; '
+        empty_values: omit
+        expected_name_counts:
+          occurrences_total: 910589
+          files_with_occurrence: 15097
+          total_files_analyzed: 57624
+        expected_order_counts:
+          occurrences_total: 910589
+          files_with_occurrence: 15097
+          total_files_analyzed: 57624
+- table: stg.apresentacoes_trabalho
+  source:
+    path: PRODUCAO-TECNICA/DEMAIS-TIPOS-DE-PRODUCAO-TECNICA/APRESENTACAO-DE-TRABALHO
+    expected_counts:
+      occurrences_total: 154272
+      files_with_occurrence: 17746
+      total_files_analyzed: 57624
+  fields:
+    id_lattes:
+      derived: root @NUMERO-IDENTIFICADOR
+    ordem_xml:
+      derived: 1-based position among APRESENTACAO-DE-TRABALHO elements
+    ano:
+      xpath: DADOS-BASICOS-DA-APRESENTACAO-DE-TRABALHO/@ANO
+      expected_counts:
+        occurrences_total: 154272
+        files_with_occurrence: 17746
+        total_files_analyzed: 57624
+    titulo:
+      xpath: DADOS-BASICOS-DA-APRESENTACAO-DE-TRABALHO/@TITULO
+      expected_counts:
+        occurrences_total: 154272
+        files_with_occurrence: 17746
+        total_files_analyzed: 57624
+    doi:
+      xpath: DADOS-BASICOS-DA-APRESENTACAO-DE-TRABALHO/@DOI
+      expected_counts:
+        occurrences_total: 151073
+        files_with_occurrence: 16725
+        total_files_analyzed: 57624
+    idioma:
+      xpath: DADOS-BASICOS-DA-APRESENTACAO-DE-TRABALHO/@IDIOMA
+      expected_counts:
+        occurrences_total: 154272
+        files_with_occurrence: 17746
+        total_files_analyzed: 57624
+    natureza:
+      xpath: DADOS-BASICOS-DA-APRESENTACAO-DE-TRABALHO/@NATUREZA
+      expected_counts:
+        occurrences_total: 154272
+        files_with_occurrence: 17746
+        total_files_analyzed: 57624
+    pais:
+      xpath: DADOS-BASICOS-DA-APRESENTACAO-DE-TRABALHO/@PAIS
+      expected_counts:
+        occurrences_total: 154272
+        files_with_occurrence: 17746
+        total_files_analyzed: 57624
+    nome_evento:
+      xpath: DETALHAMENTO-DA-APRESENTACAO-DE-TRABALHO/@NOME-DO-EVENTO
+      expected_counts:
+        occurrences_total: 154272
+        files_with_occurrence: 17746
+        total_files_analyzed: 57624
+    cidade_apresentacao:
+      xpath: DETALHAMENTO-DA-APRESENTACAO-DE-TRABALHO/@CIDADE-DA-APRESENTACAO
+      expected_counts:
+        occurrences_total: 154272
+        files_with_occurrence: 17746
+        total_files_analyzed: 57624
+    local_apresentacao:
+      xpath: DETALHAMENTO-DA-APRESENTACAO-DE-TRABALHO/@LOCAL-DA-APRESENTACAO
+      expected_counts:
+        occurrences_total: 154272
+        files_with_occurrence: 17746
+        total_files_analyzed: 57624
+    instituicao_promotora:
+      xpath: DETALHAMENTO-DA-APRESENTACAO-DE-TRABALHO/@INSTITUICAO-PROMOTORA
+      expected_counts:
+        occurrences_total: 154272
+        files_with_occurrence: 17746
+        total_files_analyzed: 57624
+    autores:
+      authors:
+        nodes_xpath: AUTORES
+        name_attribute: NOME-COMPLETO-DO-AUTOR
+        order_attribute: ORDEM-DE-AUTORIA
+        sort_order: numeric_ascending_then_source_order
+        separator: '; '
+        empty_values: omit
+        expected_name_counts:
+          occurrences_total: 477297
+          files_with_occurrence: 17741
+          total_files_analyzed: 57624
+        expected_order_counts:
+          occurrences_total: 477297
+          files_with_occurrence: 17741
+          total_files_analyzed: 57624
+- table: stg.outras_producoes
+  source:
+    path: PRODUCAO-BIBLIOGRAFICA/DEMAIS-TIPOS-DE-PRODUCAO-BIBLIOGRAFICA/OUTRA-PRODUCAO-BIBLIOGRAFICA
+    expected_counts:
+      occurrences_total: 10028
+      files_with_occurrence: 3307
+      total_files_analyzed: 57624
+  fields:
+    id_lattes:
+      derived: root @NUMERO-IDENTIFICADOR
+    ordem_xml:
+      derived: 1-based position among OUTRA-PRODUCAO-BIBLIOGRAFICA elements
+    ano:
+      xpath: DADOS-BASICOS-DE-OUTRA-PRODUCAO/@ANO
+      expected_counts:
+        occurrences_total: 10028
+        files_with_occurrence: 3307
+        total_files_analyzed: 57624
+    titulo:
+      xpath: DADOS-BASICOS-DE-OUTRA-PRODUCAO/@TITULO
+      expected_counts:
+        occurrences_total: 10028
+        files_with_occurrence: 3307
+        total_files_analyzed: 57624
+    doi:
+      xpath: DADOS-BASICOS-DE-OUTRA-PRODUCAO/@DOI
+      expected_counts:
+        occurrences_total: 10024
+        files_with_occurrence: 3304
+        total_files_analyzed: 57624
+    idioma:
+      xpath: DADOS-BASICOS-DE-OUTRA-PRODUCAO/@IDIOMA
+      expected_counts:
+        occurrences_total: 10028
+        files_with_occurrence: 3307
+        total_files_analyzed: 57624
+    natureza:
+      xpath: DADOS-BASICOS-DE-OUTRA-PRODUCAO/@NATUREZA
+      expected_counts:
+        occurrences_total: 10028
+        files_with_occurrence: 3307
+        total_files_analyzed: 57624
+    meio_divulgacao:
+      xpath: DADOS-BASICOS-DE-OUTRA-PRODUCAO/@MEIO-DE-DIVULGACAO
+      expected_counts:
+        occurrences_total: 10028
+        files_with_occurrence: 3307
+        total_files_analyzed: 57624
+    pais_publicacao:
+      xpath: DADOS-BASICOS-DE-OUTRA-PRODUCAO/@PAIS-DE-PUBLICACAO
+      expected_counts:
+        occurrences_total: 10028
+        files_with_occurrence: 3307
+        total_files_analyzed: 57624
+    cidade_editora:
+      xpath: DETALHAMENTO-DE-OUTRA-PRODUCAO/@CIDADE-DA-EDITORA
+      expected_counts:
+        occurrences_total: 10028
+        files_with_occurrence: 3307
+        total_files_analyzed: 57624
+    editora:
+      xpath: DETALHAMENTO-DE-OUTRA-PRODUCAO/@EDITORA
+      expected_counts:
+        occurrences_total: 10028
+        files_with_occurrence: 3307
+        total_files_analyzed: 57624
+    issn_isbn:
+      xpath: DETALHAMENTO-DE-OUTRA-PRODUCAO/@ISSN-ISBN
+      expected_counts:
+        occurrences_total: 10028
+        files_with_occurrence: 3307
+        total_files_analyzed: 57624
+    numero_paginas:
+      xpath: DETALHAMENTO-DE-OUTRA-PRODUCAO/@NUMERO-DE-PAGINAS
+      expected_counts:
+        occurrences_total: 10028
+        files_with_occurrence: 3307
+        total_files_analyzed: 57624
+    autores:
+      authors:
+        nodes_xpath: AUTORES
+        name_attribute: NOME-COMPLETO-DO-AUTOR
+        order_attribute: ORDEM-DE-AUTORIA
+        sort_order: numeric_ascending_then_source_order
+        separator: '; '
+        empty_values: omit
+        expected_name_counts:
+          occurrences_total: 29592
+          files_with_occurrence: 3303
+          total_files_analyzed: 57624
+        expected_order_counts:
+          occurrences_total: 29592
+          files_with_occurrence: 3303
+          total_files_analyzed: 57624

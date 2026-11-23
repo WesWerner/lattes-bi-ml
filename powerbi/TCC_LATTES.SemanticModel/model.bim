@@ -1,0 +1,2029 @@
+{
+  "compatibilityLevel": 1567,
+  "model": {
+    "annotations": [
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"bi d_grande_area\",\"bi d_macrotema\",\"bi d_tempo\",\"bi d_tipo_producao\",\"bi v_distribuicao_producao_pesquisador\",\"bi v_kpis_gerais\",\"bi v_linhas_pesquisa\",\"bi v_macrotema_ano_tipo\",\"bi v_macrotema_grande_area\",\"bi v_obras_distintas\",\"bi v_pais_ano_tipo\",\"bi v_pesquisadores_ano\",\"bi v_pesquisadores_area\",\"bi v_producao_ano_tipo\",\"bi v_producao_grande_area_ano\",\"bi v_qualidade_classificacao\",\"bi v_topicos\"]"
+      },
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "1"
+      },
+      {
+        "name": "PBIDesktopVersion",
+        "value": "2.138.1452.0 (24.11)"
+      },
+      {
+        "name": "PBI_ProTooling",
+        "value": "[\"DevMode\"]"
+      }
+    ],
+    "culture": "pt-BR",
+    "cultures": [
+      {
+        "name": "pt-BR",
+        "linguisticMetadata": {
+          "content": {
+            "Language": "en-US",
+            "Version": "1.0.0"
+          },
+          "contentType": "json"
+        }
+      }
+    ],
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "relationships": [
+      {
+        "name": "AutoDetected_3e21ef74-f9fc-4bc0-b711-963ca7540dca",
+        "fromColumn": "grande_area",
+        "fromTable": "bi v_macrotema_grande_area",
+        "toColumn": "grande_area",
+        "toTable": "bi d_grande_area"
+      },
+      {
+        "name": "AutoDetected_cb8843bd-55bd-43d6-96c6-7b8d8c1bb823",
+        "fromColumn": "grande_area",
+        "fromTable": "bi v_pesquisadores_area",
+        "toColumn": "grande_area",
+        "toTable": "bi d_grande_area"
+      },
+      {
+        "name": "AutoDetected_1eceb089-6f73-4b4b-a954-3e15e6dd38a2",
+        "fromColumn": "grande_area",
+        "fromTable": "bi v_producao_grande_area_ano",
+        "toColumn": "grande_area",
+        "toTable": "bi d_grande_area"
+      },
+      {
+        "name": "AutoDetected_b5c65de4-d4d9-45ed-b74f-b295fb9bb2b8",
+        "fromColumn": "macrotema",
+        "fromTable": "bi v_macrotema_ano_tipo",
+        "toColumn": "macrotema",
+        "toTable": "bi d_macrotema"
+      },
+      {
+        "name": "AutoDetected_071df0b4-fd6f-4617-9ba0-8af4c0a0898c",
+        "fromColumn": "macrotema",
+        "fromTable": "bi v_macrotema_grande_area",
+        "toColumn": "macrotema",
+        "toTable": "bi d_macrotema"
+      },
+      {
+        "name": "AutoDetected_ecacc294-5ee1-488b-8751-43fefd32df27",
+        "fromColumn": "macrotema",
+        "fromTable": "bi v_topicos",
+        "toColumn": "macrotema",
+        "toTable": "bi d_macrotema"
+      },
+      {
+        "name": "AutoDetected_c8260311-39da-4f2c-befc-e2a371a4a7b5",
+        "fromColumn": "ano_rotulo",
+        "fromTable": "bi v_macrotema_ano_tipo",
+        "toColumn": "ano_rotulo",
+        "toTable": "bi d_tempo"
+      },
+      {
+        "name": "AutoDetected_b5cd63cd-4fec-40a9-9a0b-db345bff7074",
+        "fromColumn": "ano_rotulo",
+        "fromTable": "bi v_obras_distintas",
+        "toColumn": "ano_rotulo",
+        "toTable": "bi d_tempo"
+      },
+      {
+        "name": "AutoDetected_63562a62-996f-4c51-a027-f51d8daf8092",
+        "fromColumn": "ano_rotulo",
+        "fromTable": "bi v_pais_ano_tipo",
+        "toColumn": "ano_rotulo",
+        "toTable": "bi d_tempo"
+      },
+      {
+        "name": "AutoDetected_9322650b-a73a-4209-8a8c-b0cc5d418781",
+        "crossFilteringBehavior": "bothDirections",
+        "fromCardinality": "one",
+        "fromColumn": "ano_rotulo",
+        "fromTable": "bi v_pesquisadores_ano",
+        "toColumn": "ano_rotulo",
+        "toTable": "bi d_tempo"
+      },
+      {
+        "name": "AutoDetected_8e504998-d992-4bce-8c87-afbbc135ae90",
+        "fromColumn": "ano_rotulo",
+        "fromTable": "bi v_producao_ano_tipo",
+        "toColumn": "ano_rotulo",
+        "toTable": "bi d_tempo"
+      },
+      {
+        "name": "AutoDetected_96ce9ca2-5ea3-4547-b55e-278b6c7163fb",
+        "fromColumn": "ano_rotulo",
+        "fromTable": "bi v_producao_grande_area_ano",
+        "toColumn": "ano_rotulo",
+        "toTable": "bi d_tempo"
+      },
+      {
+        "name": "AutoDetected_5e2154ba-cf64-4a83-bb0f-4dad7506d2b3",
+        "fromColumn": "ano_rotulo",
+        "fromTable": "bi v_qualidade_classificacao",
+        "toColumn": "ano_rotulo",
+        "toTable": "bi d_tempo"
+      },
+      {
+        "name": "AutoDetected_3098c686-c509-496d-8bd0-8ac2d7197d73",
+        "fromColumn": "tipo_producao",
+        "fromTable": "bi v_distribuicao_producao_pesquisador",
+        "toColumn": "tipo_producao",
+        "toTable": "bi d_tipo_producao"
+      },
+      {
+        "name": "AutoDetected_6dfdba21-291b-4c68-99c7-a2303c48f225",
+        "fromColumn": "tipo_producao",
+        "fromTable": "bi v_macrotema_ano_tipo",
+        "toColumn": "tipo_producao",
+        "toTable": "bi d_tipo_producao"
+      },
+      {
+        "name": "AutoDetected_469dde37-5dc4-4fba-bfd1-359bb2cb8b1d",
+        "fromColumn": "tipo_producao",
+        "fromTable": "bi v_obras_distintas",
+        "toColumn": "tipo_producao",
+        "toTable": "bi d_tipo_producao"
+      },
+      {
+        "name": "AutoDetected_fae89cec-0e91-497f-ac6b-46bc480f34c6",
+        "fromColumn": "tipo_producao",
+        "fromTable": "bi v_pais_ano_tipo",
+        "toColumn": "tipo_producao",
+        "toTable": "bi d_tipo_producao"
+      },
+      {
+        "name": "AutoDetected_6ff6a8b8-e4d7-405c-a3d1-4bd0e8feed41",
+        "fromColumn": "tipo_producao",
+        "fromTable": "bi v_producao_ano_tipo",
+        "toColumn": "tipo_producao",
+        "toTable": "bi d_tipo_producao"
+      },
+      {
+        "name": "AutoDetected_2e9b67d5-82c9-40ff-b54f-e932cbd737fa",
+        "fromColumn": "tipo_producao",
+        "fromTable": "bi v_qualidade_classificacao",
+        "toColumn": "tipo_producao",
+        "toTable": "bi d_tipo_producao"
+      }
+    ],
+    "sourceQueryCulture": "pt-BR",
+    "tables": [
+      {
+        "name": "bi d_grande_area",
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navegação"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Exception"
+          }
+        ],
+        "columns": [
+          {
+            "name": "grande_area",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "053a9037-9f81-4295-9992-e94dc4de362c",
+            "sourceColumn": "grande_area",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "622a48cd-e00e-4659-9410-b4060cf370d3",
+        "partitions": [
+          {
+            "name": "bi d_grande_area",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Fonte = PostgreSQL.Database(\"localhost\", \"dw_lattes\"),",
+                "    bi_d_grande_area = Fonte{[Schema=\"bi\",Item=\"d_grande_area\"]}[Data]",
+                "in",
+                "    bi_d_grande_area"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "bi d_macrotema",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "id_macrotema",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "2c2e9453-47d7-44ff-8eac-d7b8dbd1d68c",
+            "sourceColumn": "id_macrotema",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "macrotema",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "84bf818b-9c48-4341-a781-57af2f69dd48",
+            "sourceColumn": "macrotema",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "palavras_chave",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "1d00ef6c-e0b1-4a7f-be57-dae907b50ad9",
+            "sourceColumn": "palavras_chave",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "n_topicos",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "8617b395-33eb-4623-b67e-2cb37303a01d",
+            "sourceColumn": "n_topicos",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "ce7eb9b3-4de9-4223-917b-91c2efa34519",
+        "partitions": [
+          {
+            "name": "bi d_macrotema",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Fonte = PostgreSQL.Database(\"localhost\", \"dw_lattes\"),",
+                "    bi_d_macrotema = Fonte{[Schema=\"bi\",Item=\"d_macrotema\"]}[Data]",
+                "in",
+                "    bi_d_macrotema"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "bi d_tempo",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "id_tempo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "d9321260-a0df-441a-a1da-474050162cd3",
+            "sourceColumn": "id_tempo",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "ano",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "52f86d7b-d108-45be-b586-632b0861e66d",
+            "sourceColumn": "ano",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "ano_rotulo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "412e4507-06fb-430b-8ddc-498f3f907c6a",
+            "sortByColumn": "ano",
+            "sourceColumn": "ano_rotulo",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "decada",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "d49fd469-15b7-4ab8-b58a-e5f80c02ad4b",
+            "sourceColumn": "decada",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "cf21bc9b-3393-4d36-ade3-abf2bd2e71da",
+        "partitions": [
+          {
+            "name": "bi d_tempo",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Fonte = PostgreSQL.Database(\"localhost\", \"dw_lattes\"),",
+                "    bi_d_tempo = Fonte{[Schema=\"bi\",Item=\"d_tempo\"]}[Data]",
+                "in",
+                "    bi_d_tempo"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "bi d_tipo_producao",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "id_tipo_producao",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "5b64513e-7dc2-4e50-9794-82e30820739a",
+            "sourceColumn": "id_tipo_producao",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "tipo_producao",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "1011bbf7-4b68-474d-b6ad-daa42033fa6f",
+            "sourceColumn": "tipo_producao",
+            "summarizeBy": "none"
+          }
+        ],
+        "lineageTag": "32c7bd66-9226-49ca-a09a-bb843020eded",
+        "partitions": [
+          {
+            "name": "bi d_tipo_producao",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Fonte = PostgreSQL.Database(\"localhost\", \"dw_lattes\"),",
+                "    bi_d_tipo_producao = Fonte{[Schema=\"bi\",Item=\"d_tipo_producao\"]}[Data]",
+                "in",
+                "    bi_d_tipo_producao"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "bi v_distribuicao_producao_pesquisador",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "tipo_producao",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "25417d5c-1666-40d4-8f78-bab756579569",
+            "sourceColumn": "tipo_producao",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "faixa",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "changedProperties": [
+              {
+                "property": "SortByColumn"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "438873f1-1bd8-4dc8-a516-f7da9d3dcf7f",
+            "sortByColumn": "ordem_faixa",
+            "sourceColumn": "faixa",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "ordem_faixa",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "e37b6009-6b49-4731-9eec-e619f74a2b2b",
+            "sourceColumn": "ordem_faixa",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "qtd_pesquisadores",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "8d3db526-f834-4b68-a150-32ad656d1e70",
+            "sourceColumn": "qtd_pesquisadores",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "qtd_producoes",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "94861a66-2569-493c-8157-c789fea8c576",
+            "sourceColumn": "qtd_producoes",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "cc662542-adf0-4a31-855b-380777e3a6d0",
+        "partitions": [
+          {
+            "name": "bi v_distribuicao_producao_pesquisador",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Fonte = PostgreSQL.Database(\"localhost\", \"dw_lattes\"),",
+                "    bi_v_distribuicao_producao_pesquisador = Fonte{[Schema=\"bi\",Item=\"v_distribuicao_producao_pesquisador\"]}[Data]",
+                "in",
+                "    bi_v_distribuicao_producao_pesquisador"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "bi v_kpis_gerais",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "total_producoes",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "668a385f-4719-4f80-97cd-a3f5ee4467bc",
+            "sourceColumn": "total_producoes",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "pesquisadores_com_producao",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "b86fff51-5a28-4057-8068-36cd57f46dd0",
+            "sourceColumn": "pesquisadores_com_producao",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "curriculos",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "ee021474-bcda-42bb-83e6-12a096690b88",
+            "sourceColumn": "curriculos",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "ano_minimo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "b0d70263-cf69-46e1-86a7-3abcddf93289",
+            "sourceColumn": "ano_minimo",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "ano_maximo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "46d783f2-8ea9-4d28-b500-3c73fa3b3257",
+            "sourceColumn": "ano_maximo",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "topicos",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "bf2bb16c-100a-4608-819a-1d9187493cb0",
+            "sourceColumn": "topicos",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "macrotemas",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "dcafdc34-4305-4401-9c3d-5d59e3a8740e",
+            "sourceColumn": "macrotemas",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "itens_tematicos",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "671ef076-f358-41c1-9660-56ae72608fae",
+            "sourceColumn": "itens_tematicos",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "itens_topico_aproximado",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "f6289b4d-66eb-4cd2-a719-50d7b9813ac2",
+            "sourceColumn": "itens_topico_aproximado",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "itens_sem_tema",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "9eb2bdcb-a9e7-4dee-8dcc-0d8a029028b1",
+            "sourceColumn": "itens_sem_tema",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "714507b3-0f56-4f28-b32b-b86fa6d4932f",
+        "partitions": [
+          {
+            "name": "bi v_kpis_gerais",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Fonte = PostgreSQL.Database(\"localhost\", \"dw_lattes\"),",
+                "    bi_v_kpis_gerais = Fonte{[Schema=\"bi\",Item=\"v_kpis_gerais\"]}[Data]",
+                "in",
+                "    bi_v_kpis_gerais"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "bi v_linhas_pesquisa",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "linha_pesquisa",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "3a726400-855b-4743-b3b8-b6e494075022",
+            "sourceColumn": "linha_pesquisa",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "qtd_pesquisadores",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "5ad3816e-fd9d-4064-b3b2-653ff42d7388",
+            "sourceColumn": "qtd_pesquisadores",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "32b69a9a-db2d-4b2a-a83f-7f02e896bc0d",
+        "partitions": [
+          {
+            "name": "bi v_linhas_pesquisa",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Fonte = PostgreSQL.Database(\"localhost\", \"dw_lattes\"),",
+                "    bi_v_linhas_pesquisa = Fonte{[Schema=\"bi\",Item=\"v_linhas_pesquisa\"]}[Data]",
+                "in",
+                "    bi_v_linhas_pesquisa"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "bi v_macrotema_ano_tipo",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "macrotema",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "4e5659b8-c035-4de5-9ff6-a5a51ca46c39",
+            "sourceColumn": "macrotema",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "ano",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "fe14775e-fd22-40be-9902-b02da2c92d8f",
+            "sourceColumn": "ano",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "ano_rotulo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "a005ccc6-2786-4151-9948-1b209ed3bd08",
+            "sourceColumn": "ano_rotulo",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "tipo_producao",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "d6197011-e16b-4127-aab4-ad56f844a2ae",
+            "sourceColumn": "tipo_producao",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "qtd_producoes",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "7605a241-d85d-44a2-95d9-621c2bfdaafb",
+            "sourceColumn": "qtd_producoes",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "qtd_topico_aproximado",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "de16649b-ddb4-4784-a511-e3db3c3957da",
+            "sourceColumn": "qtd_topico_aproximado",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "qtd_pesquisadores",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "be056448-fd4f-4308-bae4-12bd58f2158c",
+            "sourceColumn": "qtd_pesquisadores",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "9e0871a0-9f9d-47a9-b38e-bd3e10110e8f",
+        "partitions": [
+          {
+            "name": "bi v_macrotema_ano_tipo",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Fonte = PostgreSQL.Database(\"localhost\", \"dw_lattes\"),",
+                "    bi_v_macrotema_ano_tipo = Fonte{[Schema=\"bi\",Item=\"v_macrotema_ano_tipo\"]}[Data]",
+                "in",
+                "    bi_v_macrotema_ano_tipo"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "bi v_macrotema_grande_area",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "grande_area",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "bd3b36f7-be6d-4089-8615-beb20fcbad3d",
+            "sourceColumn": "grande_area",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "macrotema",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "7bf9f4d6-a92b-4706-90bb-ce1f025f12fb",
+            "sourceColumn": "macrotema",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "qtd_producoes",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "3481911e-7eeb-41cc-aaa9-dacc2c4dc22e",
+            "sourceColumn": "qtd_producoes",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "qtd_pesquisadores",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "bcea7860-70fc-42dc-977d-04293af524e3",
+            "sourceColumn": "qtd_pesquisadores",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "003a74dc-e9b8-41bf-ab69-ab7763e23623",
+        "partitions": [
+          {
+            "name": "bi v_macrotema_grande_area",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Fonte = PostgreSQL.Database(\"localhost\", \"dw_lattes\"),",
+                "    bi_v_macrotema_grande_area = Fonte{[Schema=\"bi\",Item=\"v_macrotema_grande_area\"]}[Data]",
+                "in",
+                "    bi_v_macrotema_grande_area"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "bi v_obras_distintas",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "ano",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "81aaf1cb-3f3b-4be4-a072-3db6e95c538a",
+            "sourceColumn": "ano",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "ano_rotulo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "7b17614f-fb1e-48d6-b1b7-0a5c1cdc657e",
+            "sourceColumn": "ano_rotulo",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "tipo_producao",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "f7fa0d1e-4bc1-4d09-8710-734383a5e07b",
+            "sourceColumn": "tipo_producao",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "qtd_itens",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "09e62f80-5758-4387-b781-37f653fff777",
+            "sourceColumn": "qtd_itens",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "qtd_obras_distintas",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "94e6f104-fb62-4c7d-9be5-79b68e63bee1",
+            "sourceColumn": "qtd_obras_distintas",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "razao_itens_obras",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "dataType": "double",
+            "lineageTag": "1a2e6013-4303-4eb5-a862-7f6080ab7657",
+            "sourceColumn": "razao_itens_obras",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "qtd_pesquisadores",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "b0237345-0e2a-4af9-8ac1-2201552535ee",
+            "sourceColumn": "qtd_pesquisadores",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "010682cf-bb96-41ce-9c27-0d52571090b9",
+        "partitions": [
+          {
+            "name": "bi v_obras_distintas",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Fonte = PostgreSQL.Database(\"localhost\", \"dw_lattes\"),",
+                "    bi_v_obras_distintas = Fonte{[Schema=\"bi\",Item=\"v_obras_distintas\"]}[Data]",
+                "in",
+                "    bi_v_obras_distintas"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "bi v_pais_ano_tipo",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "pais",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "5ffd331d-d0a2-442a-ad29-82050c08f09f",
+            "sourceColumn": "pais",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "fora_do_brasil",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "boolean",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "8d039107-d96c-46aa-a615-8bc5585b0832",
+            "sourceColumn": "fora_do_brasil",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "ano",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "729518ae-9063-4de0-a6ed-f51a6b99818d",
+            "sourceColumn": "ano",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "ano_rotulo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "fdfbc02f-6b2b-4872-929c-f8b65dc826c1",
+            "sourceColumn": "ano_rotulo",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "tipo_producao",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "f498a668-9ec5-41e8-b7f8-744b691d69aa",
+            "sourceColumn": "tipo_producao",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "qtd_producoes",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "f18cd98d-4bb9-4e2b-aab0-14899d0d0a5b",
+            "sourceColumn": "qtd_producoes",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "qtd_pesquisadores",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "176a69ce-4881-420d-98d4-19381bc4f780",
+            "sourceColumn": "qtd_pesquisadores",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "1f2b3b14-098d-4726-a17f-fbbea68dd746",
+        "partitions": [
+          {
+            "name": "bi v_pais_ano_tipo",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Fonte = PostgreSQL.Database(\"localhost\", \"dw_lattes\"),",
+                "    bi_v_pais_ano_tipo = Fonte{[Schema=\"bi\",Item=\"v_pais_ano_tipo\"]}[Data]",
+                "in",
+                "    bi_v_pais_ano_tipo"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "bi v_pesquisadores_ano",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "ano",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "0af6e861-890e-49b0-a204-7d2b94898982",
+            "sourceColumn": "ano",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "ano_rotulo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "dd568cc3-e1d8-447d-843a-07f0c4b2e122",
+            "sourceColumn": "ano_rotulo",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "qtd_producoes",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "bb166a3d-a64f-42c3-873a-81590480fa7b",
+            "sourceColumn": "qtd_producoes",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "qtd_pesquisadores",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "cbd785e4-97a3-4a8c-a330-196f2df24c0f",
+            "sourceColumn": "qtd_pesquisadores",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "3226bad3-7112-4507-8784-3ae5c1083edb",
+        "partitions": [
+          {
+            "name": "bi v_pesquisadores_ano",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Fonte = PostgreSQL.Database(\"localhost\", \"dw_lattes\"),",
+                "    bi_v_pesquisadores_ano = Fonte{[Schema=\"bi\",Item=\"v_pesquisadores_ano\"]}[Data]",
+                "in",
+                "    bi_v_pesquisadores_ano"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "bi v_pesquisadores_area",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "grande_area",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "9a074d75-e438-4aab-9f00-d5c51def7750",
+            "sourceColumn": "grande_area",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "area",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "0c436ecf-94ad-43f7-ae45-efd51c827d6c",
+            "sourceColumn": "area",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "qtd_pesquisadores",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "ca8d3d08-e8a0-4fd9-a80b-cb0206d9e373",
+            "sourceColumn": "qtd_pesquisadores",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "20cbb3b8-2965-46ba-83d1-2186bf2ff5a6",
+        "partitions": [
+          {
+            "name": "bi v_pesquisadores_area",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Fonte = PostgreSQL.Database(\"localhost\", \"dw_lattes\"),",
+                "    bi_v_pesquisadores_area = Fonte{[Schema=\"bi\",Item=\"v_pesquisadores_area\"]}[Data]",
+                "in",
+                "    bi_v_pesquisadores_area"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "bi v_producao_ano_tipo",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "ano",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "d9b38927-4ebb-47ef-9a4a-f12365d0a984",
+            "sourceColumn": "ano",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "ano_rotulo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "bbd17ab0-a386-4871-82b9-8aceeadfafd2",
+            "sourceColumn": "ano_rotulo",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "tipo_producao",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "2c421296-cbb6-4e06-96c1-544675aae6a5",
+            "sourceColumn": "tipo_producao",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "qtd_producoes",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "f37b214f-ed82-4a04-870d-6886a504179c",
+            "sourceColumn": "qtd_producoes",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "qtd_pesquisadores",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "fc5c4346-2dae-4087-a60c-6e0c077366ad",
+            "sourceColumn": "qtd_pesquisadores",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "c290d58c-ee27-4a22-a4ca-92b70e2bf7ca",
+        "partitions": [
+          {
+            "name": "bi v_producao_ano_tipo",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Fonte = PostgreSQL.Database(\"localhost\", \"dw_lattes\"),",
+                "    bi_v_producao_ano_tipo = Fonte{[Schema=\"bi\",Item=\"v_producao_ano_tipo\"]}[Data]",
+                "in",
+                "    bi_v_producao_ano_tipo"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "bi v_producao_grande_area_ano",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "grande_area",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "071a7b8f-a95f-4bf4-8b42-a546bd7ec3de",
+            "sourceColumn": "grande_area",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "ano",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "9685536d-f466-4981-b3be-b09f6261a1bc",
+            "sourceColumn": "ano",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "ano_rotulo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "b76fed16-ca3d-4a5d-af77-12eefb9bf4c6",
+            "sourceColumn": "ano_rotulo",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "qtd_producoes",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "40a8472c-a622-4b48-b899-6aca24d7276d",
+            "sourceColumn": "qtd_producoes",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "qtd_pesquisadores",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "aae4f84d-83a1-4ea3-89ee-c8ec671659da",
+            "sourceColumn": "qtd_pesquisadores",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "c40914d5-d78e-43bf-8375-d301c208f87a",
+        "partitions": [
+          {
+            "name": "bi v_producao_grande_area_ano",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Fonte = PostgreSQL.Database(\"localhost\", \"dw_lattes\"),",
+                "    bi_v_producao_grande_area_ano = Fonte{[Schema=\"bi\",Item=\"v_producao_grande_area_ano\"]}[Data]",
+                "in",
+                "    bi_v_producao_grande_area_ano"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "bi v_qualidade_classificacao",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "tipo_producao",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "4edc1e5e-aa22-4a86-acbd-bdab3e31eb7d",
+            "sourceColumn": "tipo_producao",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "ano",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "8f573c2b-4772-4ceb-8bf7-a96c27ae4d7b",
+            "sourceColumn": "ano",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "ano_rotulo",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "b01b2c13-1f39-459c-bc9b-7e97ceb34087",
+            "sourceColumn": "ano_rotulo",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "qtd_producoes",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "782df451-ff7d-469b-b750-f522325421a0",
+            "sourceColumn": "qtd_producoes",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "qtd_topico_aproximado",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "8cb7fa09-126c-430e-aaf7-6575ee6c008b",
+            "sourceColumn": "qtd_topico_aproximado",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "qtd_sem_tema",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "4b9aa7cb-f414-48cd-8500-4b2eda840e79",
+            "sourceColumn": "qtd_sem_tema",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "qtd_pesquisadores",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "ca5a5296-b767-41cb-b59e-bf9f57a90fb5",
+            "sourceColumn": "qtd_pesquisadores",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "9813e1bc-62a0-4f96-98d0-ddfe67d05b15",
+        "partitions": [
+          {
+            "name": "bi v_qualidade_classificacao",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Fonte = PostgreSQL.Database(\"localhost\", \"dw_lattes\"),",
+                "    bi_v_qualidade_classificacao = Fonte{[Schema=\"bi\",Item=\"v_qualidade_classificacao\"]}[Data]",
+                "in",
+                "    bi_v_qualidade_classificacao"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "bi v_topicos",
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ],
+        "columns": [
+          {
+            "name": "id_topico",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "6b00e137-40b9-44c3-bf4b-d815fce69cfd",
+            "sourceColumn": "id_topico",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "topico",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "20e7b82e-1cbe-42c2-8e21-789282f0980c",
+            "sourceColumn": "topico",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "macrotema",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "41274376-a103-44b3-90f2-ea06c8683fce",
+            "sourceColumn": "macrotema",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "palavras_chave",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "string",
+            "lineageTag": "6a295c76-8f3c-4cd7-8a33-7b19a7754772",
+            "sourceColumn": "palavras_chave",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "marcado_revisao",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "boolean",
+            "formatString": "\"TRUE\";\"TRUE\";\"FALSE\"",
+            "lineageTag": "63f81dba-db16-4d21-9541-4f9119675f2e",
+            "sourceColumn": "marcado_revisao",
+            "summarizeBy": "none"
+          },
+          {
+            "name": "qtd_producoes",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "203470ba-e39a-4229-b97d-6c43e2e0105b",
+            "sourceColumn": "qtd_producoes",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "qtd_topico_aproximado",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "1d12b1ae-e969-4b61-95c1-edfd12dc0c58",
+            "sourceColumn": "qtd_topico_aproximado",
+            "summarizeBy": "sum"
+          },
+          {
+            "name": "qtd_pesquisadores",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "lineageTag": "e477db1c-fbe5-40ab-813b-7f12009290df",
+            "sourceColumn": "qtd_pesquisadores",
+            "summarizeBy": "sum"
+          }
+        ],
+        "lineageTag": "2d64e6ab-85c9-44c6-9716-15227d530c6d",
+        "partitions": [
+          {
+            "name": "bi v_topicos",
+            "mode": "import",
+            "source": {
+              "expression": [
+                "let",
+                "    Fonte = PostgreSQL.Database(\"localhost\", \"dw_lattes\"),",
+                "    bi_v_topicos = Fonte{[Schema=\"bi\",Item=\"v_topicos\"]}[Data]",
+                "in",
+                "    bi_v_topicos"
+              ],
+              "type": "m"
+            }
+          }
+        ]
+      },
+      {
+        "name": "Medidas",
+        "annotations": [
+          {
+            "name": "PBI_Id",
+            "value": "64213e8001eb461b9d203d7c9592ebf0"
+          }
+        ],
+        "columns": [
+          {
+            "name": "Value",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ],
+            "dataType": "int64",
+            "formatString": "0",
+            "isDataTypeInferred": true,
+            "isHidden": true,
+            "isNameInferred": true,
+            "lineageTag": "f4c3e5ea-1f44-4472-805b-b70339e59992",
+            "sourceColumn": "[Value]",
+            "summarizeBy": "sum",
+            "type": "calculatedTableColumn"
+          }
+        ],
+        "lineageTag": "ae6b7272-a688-41a3-a061-85605fca46f1",
+        "measures": [
+          {
+            "name": "Total de produções",
+            "expression": "SUM('bi v_kpis_gerais'[total_producoes])",
+            "formatString": "0",
+            "lineageTag": "f52e32e3-0663-4c67-8ba4-b3d66fce621e"
+          },
+          {
+            "name": "Pesquisadores com produção",
+            "expression": "SUM('bi v_kpis_gerais'[pesquisadores_com_producao])",
+            "formatString": "0",
+            "lineageTag": "abf0b554-f11c-41c2-845c-08a5543c355d"
+          },
+          {
+            "name": "Tópicos",
+            "expression": "SUM('bi v_kpis_gerais'[topicos])",
+            "formatString": "0",
+            "lineageTag": "b64f4e5d-6a90-4271-8984-36a7c3a55cf2"
+          },
+          {
+            "name": "Macrotemas",
+            "expression": "SUM('bi v_kpis_gerais'[macrotemas])",
+            "formatString": "0",
+            "lineageTag": "bf502752-d15c-4974-b50a-ca35f7f59faa"
+          },
+          {
+            "name": "Produções",
+            "expression": "SUM('bi v_producao_ano_tipo'[qtd_producoes])",
+            "formatString": "0",
+            "lineageTag": "eccaf439-b90f-40c7-a918-127bbf441607"
+          },
+          {
+            "name": "Pesquisadores por ano",
+            "expression": "SUM ('bi v_pesquisadores_ano'[qtd_pesquisadores])",
+            "formatString": "0",
+            "lineageTag": "6d1d0a61-793b-4453-8b7c-91bf78179711"
+          },
+          {
+            "name": "Produções por grande área",
+            "expression": "SUM('bi v_producao_grande_area_ano'[qtd_producoes])",
+            "formatString": "0",
+            "lineageTag": "abdf42d3-df1e-49bf-8b60-0f1b90ecb696"
+          },
+          {
+            "name": "Produções por macrotema",
+            "expression": "SUM('bi v_macrotema_ano_tipo'[qtd_producoes])",
+            "formatString": "0",
+            "lineageTag": "12aa4664-dc37-4f07-a953-cd7664f3e58e"
+          },
+          {
+            "name": "Participação do macrotema",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "expression": [
+              "DIVIDE(",
+              "[Produções por macrotema],",
+              "CALCULATE( [Produções por macrotema], ALL('bi v_macrotema_ano_tipo'[macrotema])",
+              "))"
+            ],
+            "lineageTag": "46c5d3b7-c61b-4dbe-85d2-fa4590ae927e"
+          },
+          {
+            "name": "% tópico aproximado",
+            "expression": [
+              "DIVIDE(",
+              "SUM('bi v_qualidade_classificacao'[qtd_topico_aproximado]),",
+              "SUM('bi v_qualidade_classificacao'[qtd_producoes])",
+              ")"
+            ],
+            "formatString": "0.00%;-0.00%;0.00%",
+            "lineageTag": "eb543b4e-d5a5-4709-8c04-eb8c68a1e0cb"
+          },
+          {
+            "name": "% sem tema",
+            "expression": [
+              "DIVIDE(",
+              "SUM('bi v_qualidade_classificacao'[qtd_sem_tema]),",
+              "SUM('bi v_qualidade_classificacao'[qtd_producoes])",
+              ")"
+            ],
+            "formatString": "0.00%;-0.00%;0.00%",
+            "lineageTag": "4eec1d9f-f64a-42a9-8786-7a38f86d8b8e"
+          },
+          {
+            "name": "Produções por país",
+            "expression": [
+              "CALCULATE(",
+              "SUM('bi v_pais_ano_tipo'[qtd_producoes]),",
+              "'bi v_pais_ano_tipo'[pais] <> \"Não informado\"",
+              "",
+              ")"
+            ],
+            "formatString": "0",
+            "lineageTag": "16433e53-251c-4384-875a-40db2c8d343b"
+          },
+          {
+            "name": "% fora do Brasil",
+            "expression": [
+              "DIVIDE(",
+              "CALCULATE(",
+              "    SUM( 'bi v_pais_ano_tipo'[qtd_producoes]), ",
+              "    'bi v_pais_ano_tipo'[fora_do_brasil] = TRUE()",
+              "),",
+              "[Produções por país]",
+              ")"
+            ],
+            "formatString": "0.00%;-0.00%;0.00%",
+            "lineageTag": "60b0fb4d-636d-4ac6-aa07-5c5b06f1d1a1"
+          },
+          {
+            "name": "Itens",
+            "expression": "SUM( 'bi v_obras_distintas'[qtd_itens])",
+            "formatString": "0",
+            "lineageTag": "7e1b8bab-53dd-4195-b730-34f5dc02fd1f"
+          },
+          {
+            "name": "Obras distintas",
+            "expression": "SUM( 'bi v_obras_distintas'[qtd_obras_distintas])",
+            "formatString": "0",
+            "lineageTag": "f3601799-18c2-4678-af12-30f344c5d05a"
+          },
+          {
+            "name": "Razão itens/obras",
+            "expression": [
+              "DIVIDE(",
+              "[Itens],",
+              "[Obras distintas]",
+              ")"
+            ],
+            "formatString": "0.00",
+            "lineageTag": "c6355c8f-f024-480b-a52e-ff2947684895"
+          },
+          {
+            "name": "Pesquisadores por área",
+            "expression": "SUM( 'bi v_pesquisadores_area'[qtd_pesquisadores])",
+            "formatString": "0",
+            "lineageTag": "3ea15ab3-e916-4be0-96df-1d971e2804b8"
+          },
+          {
+            "name": "% classificado diretamente",
+            "annotations": [
+              {
+                "name": "PBI_FormatHint",
+                "value": "{\"isGeneralNumber\":true}"
+              }
+            ],
+            "expression": "1 - [% tópico aproximado] - [% sem tema]",
+            "lineageTag": "5269258d-c85a-4d2a-a5b2-5bdfa4726d68"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Medidas",
+            "mode": "import",
+            "source": {
+              "expression": "{ BLANK()}",
+              "type": "calculated"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

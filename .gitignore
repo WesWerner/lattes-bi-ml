@@ -1,0 +1,53 @@
+# Ambientes e caches
+.venv/
+.venv-ml/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Segredos
+.env
+*.env
+config/*.local.*
+
+# DADOS PESSOAIS / BRUTOS (nunca publicar): curriculos Lattes, dumps, saidas com IDs
+data/
+dados/
+xml/
+*.xml
+*.sql.gz
+*.dump
+*.backup
+saidas/
+fase6_*.csv
+*id_lattes*.csv
+*hash*.csv
+
+# Artefatos pesados de ML (gerados pelo pipeline)
+*.npy
+*.pkl
+*.parquet
+modelos/
+embeddings/
+
+# Power BI: dados em cache e temporarios
+*.pbix.bak
+.pbi/
+*.pbids
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+~$*
+
+# Saidas de LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.bbl
+*.blg
+
+# Inventarios gerados localmente (opcional publicar os agregados)
+reports/
+relatorios/
+logs/

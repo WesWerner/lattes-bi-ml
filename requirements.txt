@@ -1,0 +1,18 @@
+# Núcleo (extração, carga, testes)
+PyYAML
+lxml
+psycopg[binary]>=3
+pytest
+
+# Camada de machine learning (Fase 8): vetores, tópicos, avaliação
+numpy
+scikit-learn
+sentence-transformers
+umap-learn
+hdbscan
+bertopic
+gensim
+
+# Apoio ao BI (recorte dos gráficos exportados do Power BI)
+pymupdf
+pillow

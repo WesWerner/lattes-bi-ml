@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "TCC_LATTES"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "7af10fce-c73e-476e-a8be-b3295b559942"
+  }
+}

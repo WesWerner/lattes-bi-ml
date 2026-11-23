@@ -1,0 +1,12 @@
+{
+  "name": "TCC Lattes",
+  "dataColors": ["#0072B2", "#E69F00", "#009E73", "#CC79A7", "#56B4E9", "#D55E00", "#F0E442", "#666666"],
+  "background": "#FFFFFF",
+  "foreground": "#262626",
+  "tableAccent": "#0072B2",
+  "textClasses": {
+    "title": {"fontFace": "Segoe UI Semibold", "fontSize": 14, "color": "#262626"},
+    "label": {"fontFace": "Segoe UI", "fontSize": 10, "color": "#404040"},
+    "callout": {"fontFace": "Segoe UI Semibold", "fontSize": 28, "color": "#0072B2"}
+  }
+}
